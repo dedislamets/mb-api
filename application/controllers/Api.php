@@ -26,7 +26,7 @@ class Api extends RestController  {
                 'status' => true,
             ], 200 );
     }
-    public function login_get()
+    public function login_post()
     {
         $email = $this->input->post('email');           
         $password = $this->input->post('password');  
@@ -41,7 +41,6 @@ class Api extends RestController  {
         }else{
             $this->response( [
                 'status' => false,
-                'data' => array(),
                 'message' => 'Incorrect username or password !!'
             ], 200 );
         }   
