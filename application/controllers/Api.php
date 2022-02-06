@@ -136,6 +136,10 @@ class Api extends RestController  {
         }
     }
 
+    public function kirim_email_get()
+    {
+        $this->Pengaturan->sendMail('dedi.slamets@gmail.com', "<h1>Ini adalah tes kirim email</h1>", "Tes kirim email");  
+    }
 
     
     public function register_post()
