@@ -185,7 +185,7 @@ class Pengaturan extends CI_Model {
             $config['charset']   = 'iso-8859-1';
 
         }else{
-            $config['smtp_host'] = "ssl://mail.marinebusiness.co.id";
+            $config['smtp_host'] = "mail.marinebusiness.co.id";
             $config['smtp_user'] = "admin@marinebusiness.co.id";
             $config['smtp_pass'] = "admin123^";
             $config['charset'] = 'utf-8';

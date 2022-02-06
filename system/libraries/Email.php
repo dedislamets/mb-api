@@ -2081,9 +2081,7 @@ class CI_Email {
 		{
 			$this->_send_command('hello');
 			$this->_send_command('starttls');
-			if( strpos( $this->smtp_host, 'ssl://') === FALSE ) {
-		      stream_socket_enable_crypto($this->_smtp_connect, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-		    }
+
 			/**
 			 * STREAM_CRYPTO_METHOD_TLS_CLIENT is quite the mess ...
 			 *
