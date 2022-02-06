@@ -144,12 +144,13 @@ class Api extends RestController  {
     
     public function register_post()
     {
-
+        $token = $this->Pengaturan->generateTokenApps();
         $data = array(
                 'nama' => $this->input->post('nama'),
                 'email' => $this->input->post('email'),
                 'phone' => $this->input->post('phone'),
                 'pass' => $this->input->post('pass'),
+                'token' => $token
         );  
 
         $body = '<div bgcolor="#f0f0f0" style="margin:0;padding:0">
@@ -170,13 +171,13 @@ class Api extends RestController  {
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="padding:0 0 30px;font-size:14px;color:#404448">
-                                                                        Selamat! Selangkah lagi untuk mengaktifkan Account anda. Aktifkan akun Anda dengan mengklik link ini <a href="https://marinebusiness.co.id/activation/sf/'. $this->input->post('token') .'" target="_blank">Klik disini</a>
+                                                                        Selamat! Selangkah lagi untuk mengaktifkan Account anda. Aktifkan akun Anda dengan mengklik link ini <a href="https://marinebusiness.co.id/activation/sf/'. $token .'" target="_blank">Klik disini</a>
                                                                         <br>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="center" colspan="2">
-                                                                        <a href="https://marinebusiness.co.id/activation/sf/'. $this->input->post('token') .'" style="display:inline-block;padding-top:12px;padding-left:24px;padding-bottom:12px;padding-right:24px;text-decoration:none;background-color:#47bbe4;border-radius:5px;font-weight:bold;color:#ffffff;text-transform:uppercase;font-size:16px" target="_blank">Aktivasi Sekarang!</a>
+                                                                        <a href="https://marinebusiness.co.id/activation/sf/'. $token .'" style="display:inline-block;padding-top:12px;padding-left:24px;padding-bottom:12px;padding-right:24px;text-decoration:none;background-color:#47bbe4;border-radius:5px;font-weight:bold;color:#ffffff;text-transform:uppercase;font-size:16px" target="_blank">Aktivasi Sekarang!</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -213,6 +214,7 @@ class Api extends RestController  {
                 }else{
                     $response['message'] = "Email already registered and verify your account now.. Please check your email";    
                     $this->Pengaturan->sendMail($this->input->post('email'), $body, "Verify your account now..");   
+
                 }   
 
                 $this->response($response, 200 );            
