@@ -28,10 +28,13 @@ class Api extends RestController  {
     }
     public function login_post()
     {
+        $json = file_get_contents('php://input');
+        $params = json_decode($json, TRUE);
+
         $email = $this->input->post('email');           
         $password = $this->input->post('password');  
 
-        $query = $this->db->get_where('t_registrasi',array('email' => $email, 'pass' => $password, 'verified' => 1));       
+        $query = $this->db->get_where('t_registrasi',array('email' => $params['email'], 'pass' => $params['password'], 'verified' => 1));       
         if ($query->num_rows() > 0) {
             $this->response([
                 'status' => true,
