@@ -99,14 +99,23 @@ class Api extends RestController  {
         }
     }
 
-    public function jenis_get()
+    public function front_kapal_get()
     {
-        $shift = $this->admin->api_array('jenis_barang');
+        $live = $this->db->select('t_iklan.*,nama_foto,nama_foto_thumb,vessel_nama,place_build,year_build,construction')
+                ->from('t_iklan')
+                ->join('t_foto_kapal', 't_foto_kapal.clasification_no=t_iklan.clasification_no','left')
+                ->join('t_kapal', 't_kapal.clasification_no=t_iklan.clasification_no','left')
+                ->where(array('status' => 1,'active' => 1))
+                ->group_by('t_iklan.id')
+                ->order_by('date_iklan','desc')  
+                ->limit(5)           
+                ->get()
+                ->result_array();
 
-        if ($shift != FALSE) {
+        if ($live != FALSE) {
             $this->response([
                 'status' => true,
-                'data' => $shift
+                'data' => $live
             ], 200 );
         }else{
 
