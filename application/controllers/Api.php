@@ -105,7 +105,7 @@ class Api extends RestController  {
                 ->from('t_iklan')
                 ->join('t_foto_kapal', 't_foto_kapal.clasification_no=t_iklan.clasification_no','left')
                 ->join('t_kapal', 't_kapal.clasification_no=t_iklan.clasification_no','left')
-                ->where(array('status' => 1,'active' => 1))
+                ->where(array('status' => 1,'active' => 1,'service' => 'Trading'))
                 ->group_by('t_iklan.id')
                 ->order_by('date_iklan','desc')  
                 ->limit(5)           
@@ -115,6 +115,8 @@ class Api extends RestController  {
         if ($live != FALSE) {
             $this->response([
                 'status' => true,
+                'title' => 'Kapal Terbaru',
+                'horizontal' => true,
                 'data' => $live
             ], 200 );
         }else{
