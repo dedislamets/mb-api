@@ -51,14 +51,12 @@ class Api extends RestController  {
 
     public function category_post()
     {
-        $json = file_get_contents('php://input');
-        $params = json_decode($json, TRUE);
 
-        $query = $this->db->get('t_kategory');       
+        $query = $this->db->get('t_kategory')->result_array();       
         if ($query->num_rows() > 0) {
             $this->response([
                 'status' => true,
-                'data' => $query->result()
+                'data' => $query
             ], 200 );
             
         }else{
