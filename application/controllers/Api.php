@@ -49,7 +49,7 @@ class Api extends RestController  {
         }   
     }
 
-    public function category_post()
+    public function category_get()
     {
 
         $query = $this->db->get('t_kategory')->result_array();       
