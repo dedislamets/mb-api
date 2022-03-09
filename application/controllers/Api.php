@@ -51,9 +51,10 @@ class Api extends RestController  {
 
     public function category_get()
     {
-
-        $query = $this->db->get('t_kategory')->result_array();       
-        if ($query->num_rows() > 0) {
+        $live = $this->db->from('t_kategory')          
+            ->get()
+            ->result_array();      
+        if ($live != FALSE) {
             $this->response([
                 'status' => true,
                 'data' => $query
