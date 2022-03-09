@@ -49,6 +49,26 @@ class Api extends RestController  {
         }   
     }
 
+    public function category_post()
+    {
+        $json = file_get_contents('php://input');
+        $params = json_decode($json, TRUE);
+
+        $query = $this->db->get('t_kategory');       
+        if ($query->num_rows() > 0) {
+            $this->response([
+                'status' => true,
+                'data' => $query->result()
+            ], 200 );
+            
+        }else{
+            $this->response( [
+                'status' => false,
+                'message' => 'Data Empty !!'
+            ], 200 );
+        }   
+    }
+
     public function notifikasi_get()
     {
         $shift = $this->admin->api_array('tb_notifikasi',array("sent_to"=> $this->get('id') ));
