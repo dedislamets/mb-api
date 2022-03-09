@@ -57,7 +57,7 @@ class Api extends RestController  {
         if ($live != FALSE) {
             $this->response([
                 'status' => true,
-                'data' => $query
+                'data' => $live
             ], 200 );
             
         }else{
