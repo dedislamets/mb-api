@@ -49,6 +49,104 @@ class Api extends RestController  {
         }   
     }
 
+    public function iklan_post()
+    {
+        $json = file_get_contents('php://input');
+        $params = json_decode($json, TRUE);
+
+        $data = array(
+            'title'             => $params('title'),
+            'description'       => $params('description'),
+            'date_iklan'        => date('Y-m-d H:i:s'),              
+            'type'              => $params('inputState'),
+            // 'type_charter'      => $params('typeCharter'),
+            'service'           => $params('gridRadios'),
+            'price'             => str_replace(",","",$params('price')),
+            // //Time & bareboat Charter
+            // 'price_charter'     => str_replace(",","",$this->input->post('price_charter')),
+            // 'duration'          => $this->input->post('duration'),
+            // 'duration_uom'      => $this->input->post('duration_uom'),
+            // 'area'              => $this->input->post('area'),
+            // //freight Charter
+            // 'price_freight'     => str_replace(",","",$this->input->post('price_freight')),
+            // 'portloading'       => $this->input->post('portloading'),
+            // 'portdiscarge'      => $this->input->post('portdiscarge'),
+            // 'qty_freight'       => str_replace(",","",$this->input->post('qty_freight')),
+            // //CSM
+            // 'price_csm'         => str_replace(",","",$this->input->post('price_csm')),
+            // 'duration_csm'      => $this->input->post('duration_csm'),
+            // 'duration_csm_uom'  => $this->input->post('duration_csm_uom'),
+            // 'area_csm'          => $this->input->post('area_csm'),
+            // 'country'           => $this->input->post('country'),
+            // 'type_comodity'     => $this->input->post('type_comodity'),
+            // 'dest_comodity'     => $this->input->post('dest_comodity'),
+            // 'qty_comodity'      => str_replace(",","",$this->input->post('qty_comodity')),            
+            'email'             => $email,
+        );
+        $data_kapal = array(
+            'vessel_nama'           => $params('vessel'),
+            'owners'                => $params('owner'),
+            'place_build'           => $params('placeBuild'),
+            'year_build'            => $params('yearBuild'),                
+            // 'builder'               => $params('builder'),
+            // 'keel_laid'             => $this->input->post('keel'),
+            // 'launching'             => $this->input->post('launching'),
+            'port_registry'         => $params('port'),
+            // 'construction'          => $this->input->post('construction'),
+            // 'call_sign'             => $this->input->post('call'),
+            // 'clasification'         => $this->input->post('clasification'),
+            // 'imo'                   => $this->input->post('imo'),
+                        //'s_phone'             => $this->input->post('phone'),
+            'loa'                   => str_replace(",","",$$params('loa')),
+            // 'length'                => str_replace(",","",$this->input->post('length')),
+            // 'breadth'               => str_replace(",","",$this->input->post('breadth')),
+            // 'depth'                 => str_replace(",","",$this->input->post('dept')),
+            // 'summer_draught'        => str_replace(",","",$this->input->post('summer')),
+            'grt'                   => str_replace(",","",$params('dwt')),
+            'nrt'                   => str_replace(",","",$params('nrt')),
+            // 'sideboard'             => str_replace(",","",$this->input->post('side')),
+            'deck_capacity'         => str_replace(",","",$params('deckCargo')),
+            'max_deck_load'         => str_replace(",","",$params('maxDeck')),              
+            // 'deck_area'             => $this->input->post('desk'),
+            'email'                 => $email,
+        );  
+
+        $result = $this->db->insert('t_iklan', $data);
+        $id = $this->db->insert_id();
+
+        $data_kapal['clasification_no'] = $id;
+        $this->db->insert('t_kapal', $data_kapal);
+        $str = $this->db->last_query();
+
+        $token=$params('token');       
+        $where = array(
+            'token' => $token
+        );
+        $updatedata = array(
+            'clasification_no' => $id,              
+        );
+
+        // $this->db->where($where);
+        // $this->db->update('t_foto_kapal',$updatedata);
+        $this->db->where($where);
+        $this->db->update('t_iklan',$updatedata);
+        // $this->db->where($where);
+        // $this->db->update('t_sertifikat',$updatedata);  
+
+        if($result){
+            $this->response([
+                'status' => true,
+                'id' => $id
+            ], 200 );
+            
+        }else{
+            $this->response( [
+                'status' => false,
+                'message' => 'Gagal menyimpan !!'
+            ], 200 );
+        }   
+    }
+
     public function category_get()
     {
         $live = $this->db->from('t_kategory')          
