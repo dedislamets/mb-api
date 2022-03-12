@@ -118,7 +118,7 @@ class Api extends RestController  {
         $this->db->insert('t_kapal', $data_kapal);
         $str = $this->db->last_query();
 
-        $token=$params('token');       
+        $token=$params['token'];       
         $where = array(
             'token' => $token
         );
