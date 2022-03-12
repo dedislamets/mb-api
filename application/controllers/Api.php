@@ -81,7 +81,7 @@ class Api extends RestController  {
             // 'type_comodity'     => $this->input->post('type_comodity'),
             // 'dest_comodity'     => $this->input->post('dest_comodity'),
             // 'qty_comodity'      => str_replace(",","",$this->input->post('qty_comodity')),            
-            'email'             => $email,
+            'email'             => $params['email'],
         );
         $data_kapal = array(
             'vessel_nama'           => $params['vessel'],
@@ -108,7 +108,7 @@ class Api extends RestController  {
             'deck_capacity'         => str_replace(",","",$params['deckCargo']),
             'max_deck_load'         => str_replace(",","",$params['maxDeck']),              
             // 'deck_area'             => $this->input->post('desk'),
-            'email'                 => $email,
+            'email'                 => $params['email'],
         );  
 
         $result = $this->db->insert('t_iklan', $data);
